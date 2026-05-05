@@ -1,0 +1,15 @@
+# Cloudflare deployment manifest for the site's static asset hosting plus draft-gating worker.
+# It exists because the current deployment path uses Workers static assets and must run `worker.js`
+# before serving `/drafts/*`. Off-the-shelf alternatives are Cloudflare Pages or another adapter,
+# but as long as this site uses signed draft URLs this file is the canonical platform config.
+# Overlap is limited to deployment settings in `astro.config.ts` and `src/config.ts`. Assessment: keep.
+name = "mendelgreenberg-com"
+compatibility_date = "2025-05-01"
+main = "worker.js"
+
+[assets]
+  directory = "./dist"
+  not_found_handling = "404-page"  # Serve custom 404 page from src/pages/404.astro
+  run_worker_first = ["/drafts/*"]
+  binding = "ASSETS"
+  # html_handling = "drop-trailing-slash"
