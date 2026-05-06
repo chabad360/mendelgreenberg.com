@@ -1,56 +1,68 @@
 #!/usr/bin/env bun
+import { argument, option } from "@optique/core/primitives";
+import { object } from "@optique/core/constructs";
+import { string, integer, url } from "@optique/core/valueparser";
+import { bindEnv, createEnvContext } from "@optique/env";
+import { optional, withDefault, map } from "@optique/core/modifiers";
+import { defineProgram } from "@optique/core/program";
+import { run } from "@optique/run";
+import { message } from "@optique/core/message";
 
-/*
- * Operational helper that generates signed draft-preview URLs matching the verification logic in `worker.js`. It exists so private drafts can be shared without exposing a general preview UI or relaxing deployment security.
- *
- * Replacement likelihood is medium. A hosted preview system or Cloudflare Access could replace the whole signed-URL workflow, but if this workflow stays then this script is the correct lightweight companion to the worker. Its only critical site-specific requirement is exact agreement with the worker's HMAC format and `/drafts/*` URL shape. Assessment: keep if the worker stays.
- */
+const envContext = createEnvContext();
 
-const usage = `Usage:
-  bun scripts/sign-draft-url.ts --slug <slug> [--base-url <url>] [--ttl <seconds>] [--secret <secret>]
+const parser = object({
+  slug: argument(
+    string({
+      metavar: "SLUG",
+    }),
+  ),
+  ttl: withDefault(
+    option(
+      "--ttl",
+      integer({
+        min: 1,
+        metavar: "SECONDS",
+      }),
+    ),
+    86400,
+  ),
+  secret: bindEnv(
+    option(
+      "--secret",
+      string({
+        metavar: "SECRET",
+      }),
+    ),
+    {
+      context: envContext,
+      key: "DRAFT_URL_SECRET",
+      parser: string(),
+    },
+  ),
+  baseUrl: optional(
+    bindEnv(option("--base-url", url()), {
+      context: envContext,
+      key: "BASE_URL",
+      parser: url(),
+    }),
+  ),
+});
 
-Examples:
-  bun scripts/sign-draft-url.ts --slug my-post
-  bun scripts/sign-draft-url.ts --slug my-post --ttl 86400
-  bun scripts/sign-draft-url.ts --slug notes/deep-dive --base-url https://example.com
+const program = defineProgram({
+  parser,
+  metadata: {
+    name: "sign-draft-url",
+    brief: message`Generate a signed URL for previewing a draft post.`,
+  },
+});
 
-Notes:
-  - Signature is HMAC-SHA256 over "<path>:<exp>"
-  - Defaults: ttl = 86400 (24h), secret = $DRAFT_URL_SECRET`;
-
-function getArg(flag: string): string | undefined {
-	const idx = process.argv.indexOf(flag);
-	return idx === -1 ? undefined : process.argv[idx + 1];
-}
-
-if (process.argv.includes("--help") || process.argv.includes("-h")) {
-	console.log(usage);
-	process.exit(0);
-}
-
-const slug = getArg("--slug");
-const baseUrl = getArg("--base-url");
-const ttlRaw = getArg("--ttl");
-const secret = getArg("--secret") ?? process.env.DRAFT_URL_SECRET;
-
-if (!slug) {
-	console.error("Error: --slug is required.");
-	console.log(usage);
-	process.exit(1);
-}
-
-if (!secret) {
-	console.error(
-		"Error: missing signing secret. Provide --secret or set DRAFT_URL_SECRET.",
-	);
-	process.exit(1);
-}
-
-const ttl = ttlRaw ? parseInt(ttlRaw, 10) : 86400;
-if (!Number.isFinite(ttl) || ttl <= 0) {
-	console.error("Error: --ttl must be a positive integer (seconds).");
-	process.exit(1);
-}
+const { slug, ttl, secret, baseUrl } = await run(program, {
+  help: "option",
+  colors: true,
+  aboveError: "usage",
+  contexts: [envContext],
+  showDefault: true,
+});
 
 const normalizedSlug = slug.replace(/^\/+/, "").replace(/\/+$/, "");
 const path = `/drafts/${normalizedSlug}`;
@@ -61,12 +73,14 @@ const hmac = new Bun.CryptoHasher("sha256", secret);
 hmac.update(payload);
 const sig = hmac.digest("hex");
 
-const query = `exp=${exp}&sig=${sig}`;
-if (baseUrl) {
-	console.log(`${baseUrl.replace(/\/+$/, "")}${path}?${query}`);
-} else {
-	console.log(`${path}?${query}`);
-}
 console.error(
-	`Generated signed URL for "${path}" (expires at ${new Date(exp * 1000).toISOString()})`,
+  `Generated signed URL for "${path}" (expires at ${new Date(exp * 1000).toISOString()})`,
 );
+if (baseUrl) {
+  baseUrl.searchParams.set("exp", exp.toString());
+  baseUrl.searchParams.set("sig", sig);
+  baseUrl.pathname = baseUrl.pathname.replace(/\/+$/, "") + path;
+  console.log(baseUrl.toString());
+} else {
+  console.log(`${path}?exp=${exp}&sig=${sig}`);
+}

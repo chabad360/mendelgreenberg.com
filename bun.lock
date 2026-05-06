@@ -8,6 +8,9 @@
         "astro": "^6.2.2",
       },
       "devDependencies": {
+        "@optique/core": "^1.0.2",
+        "@optique/env": "^1.0.2",
+        "@optique/run": "^1.0.2",
         "@types/bun": "^1.3.13",
       },
     },
@@ -142,6 +145,12 @@
     "@img/sharp-win32-x64": ["@img/sharp-win32-x64@0.34.5", "", { "os": "win32", "cpu": "x64" }, "sha512-+29YMsqY2/9eFEiW93eqWnuLcWcufowXewwSNIT6UwZdUUCrM3oFjMWH/Z6/TMmb4hlFenmfAVbpWeup2jryCw=="],
 
     "@jridgewell/sourcemap-codec": ["@jridgewell/sourcemap-codec@1.5.5", "", {}, "sha512-cYQ9310grqxueWbl+WuIUIaiUaDcj7WOq5fVhEljNVgRfOUhY9fy2zTvfoqWsnebh8Sl70VScFbICvJnLKB0Og=="],
+
+    "@optique/core": ["@optique/core@1.0.2", "", {}, "sha512-znsqMmjAdeOgSJzdJlpZpgAscojwQmeQYXzYnuEKllz5VCj6WyEkdzU4QuvJQtWQY3ve2taXwudEBRur0VHBOQ=="],
+
+    "@optique/env": ["@optique/env@1.0.2", "", { "dependencies": { "@optique/core": "1.0.2" } }, "sha512-WFIYCRKPRt/inHNKa3srsebWneEJUmUSdqh1xfNf9RqKKwgkIGhrAJR/TIT0cLN3lVa3ztZPpjb5hPe006xpsw=="],
+
+    "@optique/run": ["@optique/run@1.0.2", "", { "dependencies": { "@optique/core": "1.0.2" } }, "sha512-0Wc+zC8SLGV8zXQX+pk+o0c6wE/ddx/36CHZ0toTh5lApsjruUuGhqbxvljerAAG5un1xQbOLxzksBVC6UPgSg=="],
 
     "@oslojs/encoding": ["@oslojs/encoding@1.1.0", "", {}, "sha512-70wQhgYmndg4GCPxPPxPGevRKqTIJ2Nh4OkiMWmDAVYsTQ+Ta7Sq+rPevXyXGdzr30/qZBnyOalCszoMxlyldQ=="],
 
