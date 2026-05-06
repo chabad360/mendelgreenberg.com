@@ -1,5 +1,7 @@
 ---
 import { getCollection, render } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import Contents from "../../components/Contents.astro";
 
 export async function getStaticPaths() {
 	const posts = await getCollection("posts");
@@ -13,6 +15,25 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 const { Content } = await render(post);
 ---
-
-<h1>{post.data.title}</h1>
-<Content />
+<Layout title={post.data.title}>
+    <Contents>
+      <h1>{post.data.title}</h1>
+      <Content />
+      <script src="https://giscus.app/client.js"
+              data-repo="chabad360/mendelgreenberg.com"
+              data-repo-id="R_kgDOSBEpeg"
+              data-category="Posts"
+              data-category-id="DIC_kwDOSBEpes4C6uHC"
+              data-mapping="pathname"
+              data-strict="0"
+              data-reactions-enabled="1"
+              data-emit-metadata="0"
+              data-input-position="top"
+              data-lang="en"
+              data-loading="lazy"
+              crossorigin="anonymous"
+              data-theme="preferred_color_scheme"
+              async>
+      </script>
+    </Contents>
+</Layout>

@@ -1,6 +1,8 @@
 ---
 import { getCollection } from "astro:content";
 import type { PaginateFunction } from "astro";
+import Layout from "../../layouts/Layout.astro";
+import Contents from "../../components/Contents.astro";
 
 export async function getStaticPaths({
 	paginate,
@@ -14,9 +16,11 @@ export async function getStaticPaths({
 
 const { page } = Astro.props;
 ---
-
-<h1>Page {page.currentPage}</h1>
-<ul>
-  <!-- List the array of astronaut info -->
-  {page.data.map((post) => <li><a href=`${post.id}`>{post.data.title}</a></li>)}
-</ul>
+<Layout title={`Posts - Page ${page.currentPage}`}>
+    <Contents>
+        <h1>Page {page.currentPage}</h1>
+        <ul>
+            {page.data.map((post) => <li><a href=`${post.id}`>{post.data.title}</a></li>)}
+        </ul>
+    </Contents>
+</Layout>

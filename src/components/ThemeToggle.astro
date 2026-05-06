@@ -1,0 +1,54 @@
+---
+import { Icon } from 'astro-icon/components'
+---
+
+<button aria-label="Toggle theme" id="theme-toggle">
+  <Icon
+    name="lucide:moon-star"
+  />
+  <Icon
+    name="lucide:sun-medium"
+  />
+</button>
+
+<script>
+  const button = document.getElementById("theme-toggle");
+  button!.addEventListener("click", () => {
+    const currentTheme = document.documentElement.getAttribute("data-theme");
+    const newTheme = currentTheme === "light" ? "dark" : "light";
+    document.documentElement.setAttribute("data-theme", newTheme);
+
+    const iframe = document.querySelector<HTMLIFrameElement>('iframe.giscus-frame');
+    if (iframe && iframe.contentWindow) {
+      iframe.contentWindow.postMessage({ giscus: {
+        setConfig: {
+          theme: newTheme
+        }
+      } }, 'https://giscus.app');
+    }
+
+    localStorage.setItem("theme", newTheme);
+  });
+</script>
+
+<style>
+  button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin: auto .5rem;
+  }
+
+  html[data-theme="light"] svg[data-icon="lucide:moon-star"] {
+    display: none;
+  }
+
+  html[data-theme="dark"] svg[data-icon="lucide:sun-medium"] {
+    display: none;
+  }
+
+  [data-icon] {
+      font-size: 14pt;
+      color: var(--color);
+  }
+</style>

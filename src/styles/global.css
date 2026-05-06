@@ -1,0 +1,56 @@
+:root {
+  --content-width: 40rem;
+
+  color-scheme: dark light;
+}
+
+@media (prefers-color-scheme: light) {
+  html {
+    --background: #fff2e6;
+    --color: #190d00;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    --background: #2a251f;
+    --color: #e9dfce;
+  }
+}
+
+/*html[data-theme="dark"] {
+  --background: #2a251f;
+  --color: #e9dfce;
+}*/
+
+html,
+body {
+  scroll-behavior: smooth;
+  margin: 0;
+  background: var(--background);
+  color: var(--color);
+}
+
+html[data-transition="true"] body {
+  transition:
+    background 0.15s,
+    color 0.15s;
+}
+
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.175s;
+}
+
+a {
+  color: var(--color);
+}
+
+a:hover {
+  text-decoration: underline;
+  text-decoration-color: var(--background);
+}

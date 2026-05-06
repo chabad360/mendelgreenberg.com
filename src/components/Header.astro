@@ -1,0 +1,43 @@
+---
+import ThemeToggle from "./ThemeToggle.astro"
+---
+<header>
+    <div>
+        <span>
+            B"H <b>Mendel Greenberg</b>
+        </span>
+        <nav>
+            <!-- <ThemeToggle /> -->
+            <a href="/posts">Posts</a>
+        </nav>
+    </div>
+</header>
+
+<style>
+    header {
+        padding: 1.5rem 2rem;
+        display: flex;
+        justify-content: center;
+        justify-content: center;
+
+        font-family: var(--font-sans);
+    }
+
+    div {
+        width: var(--content-width);
+
+        display: flex;
+        justify-content: space-between;
+    }
+
+    a {
+        text-decoration: none;
+        border: 1px solid var(--color);
+        padding: 0.5rem 1rem;
+        vertical-align: top;
+    }
+
+    a:visited {
+        color: var(--color);
+    }
+</style>
