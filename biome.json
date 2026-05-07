@@ -11,6 +11,7 @@
       "src/**",
       "scripts/**",
       "package.json",
+      "biome.json",
       "worker.js",
       "tsconfig.json",
       "astro.config.ts"

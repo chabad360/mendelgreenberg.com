@@ -17,7 +17,6 @@ const { title } = Astro.props;
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
-		<meta name="color-scheme" content="light dark" />
 
 		<meta name="generator" content={Astro.generator} />
 
@@ -26,12 +25,16 @@ const { title } = Astro.props;
 
 		<title>{title ?? "Mendel Greenberg"}</title>
 
-		<!-- <script>
+		<script>
       if (localStorage.getItem("theme")) {
         document.documentElement.setAttribute("data-theme", localStorage.getItem("theme")!);
-        document.documentElement.setAttribute("data-transition", "true");
+      } else if (window.matchMedia("(prefers-color-scheme: light)").matches) {
+        document.documentElement.setAttribute("data-theme", "light");
+      } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        document.documentElement.setAttribute("data-theme", "dark");
       }
-    </script> -->
+      document.documentElement.setAttribute("data-transition", "true");
+    </script>
 	</head>
 	<body>
 	    <Header />

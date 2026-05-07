@@ -1,0 +1,95 @@
+---
+import type { MarkdownHeading } from "astro";
+
+interface Props {
+	headings: MarkdownHeading[];
+}
+
+const { headings } = Astro.props;
+---
+<nav>
+  <h2>Contents</h2>
+  <ul>
+    {headings.map((heading) => (
+      <li>
+        <a href={`#${heading.slug}`}>{heading.text}</a>
+      </li>
+    ))}
+  </ul>
+</nav>
+
+<script define:vars={{ headings }}>
+const observer = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      console.log(entry);
+      const id = entry.target.getAttribute("id");
+      if (entry.intersectionRatio > 0) {
+        document.querySelector(`a.current`)?.classList.remove("current");
+        document.querySelector(`a[href="#${id}"]`)?.classList.add("current");
+      }
+    });
+  },
+  { rootMargin: "0px 0px -70% 0px" }
+);
+
+document.addEventListener("DOMContentLoaded", () => {
+  headings.forEach((heading) => {
+    const element = document.getElementById(heading.slug);
+    observer.observe(element);
+  });
+});
+</script>
+
+<style>
+  nav {
+    position: fixed;
+    width: 15rem;
+    padding-top: 1rem;
+    padding-bottom: 0.5rem;
+    margin-left: -17rem;
+    text-align: left;
+    background: var(--background);
+    font-size: 12pt;
+  }
+
+  @media (max-width: 800px) {
+    nav {
+      position: static;
+      width: auto;
+      margin: 0;
+      padding: 0;
+    }
+  }
+
+  h2 {
+    font-size: 18pt;
+    margin-bottom: 0;
+  }
+
+  ul {
+    padding: 0;
+    margin-top: 0.25rem;
+  }
+
+  li {
+    list-style: none;
+  }
+
+  a {
+    text-decoration: none;
+    color: var(--color);
+    transition: margin-left;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  a.current::before {
+    display: inline;
+    content: "▸";
+    margin-right: 0.25rem;
+    margin-left: -1rem;
+  }
+</style>

@@ -39,12 +39,18 @@ import { Icon } from 'astro-icon/components'
     margin: auto .5rem;
   }
 
-  html[data-theme="light"] svg[data-icon="lucide:moon-star"] {
+  svg[data-icon="lucide:moon-star"],
+  svg[data-icon="lucide:sun-medium"] {
     display: none;
   }
 
-  html[data-theme="dark"] svg[data-icon="lucide:sun-medium"] {
-    display: none;
+  html[data-theme="dark"] svg[data-icon="lucide:moon-star"] {
+    display: unset;
+  }
+
+  html:not([data-theme]) svg[data-icon="lucide:sun-medium"],
+  html[data-theme="light"] svg[data-icon="lucide:sun-medium"] {
+    display: unset;
   }
 
   [data-icon] {
