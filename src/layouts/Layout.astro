@@ -1,14 +1,21 @@
 ---
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+import { config } from "../config";
 import "../styles/global.css";
 import { Font } from "astro:assets";
+import type { ItemSchema } from "../content.config";
+import { SEO } from "astro-seo";
+import type { CollectionEntry } from "astro:content";
+import type { DataEntryMap } from "astro:content";
+
 
 export interface Props {
-  title: string;
+  title?: string;
+  item?: CollectionEntry<keyof DataEntryMap> & { data: ItemSchema };
 }
 
-const { title } = Astro.props;
+const { title, item } = Astro.props;
 ---
 
 <!doctype html>
@@ -22,16 +29,35 @@ const { title } = Astro.props;
 		<link
         rel="alternate"
         type="application/rss+xml"
-        title="Mendel Greenberg"
+        title={config.title}
         href={new URL("rss.xml", Astro.site)}
     />
 
+    {item &&
+      <SEO
+        title={item.data.title}
+        description={item.data.description}
+        openGraph={{
+          basic: {
+            type: "article",
+            title: item.data.title,
+            image: item.data.image ? new URL(item.data.image, Astro.site).href : new URL(`/og/${item.collection}/${item.id}.png`, Astro.site).href,
+          },
+          article: {
+            publishedTime: item.data.date.toISOString(),
+            authors: [config.author.name],
+            tags: item.data.tags,
+          }
+        }}
+      />
+    }
+
 		<meta name="generator" content={Astro.generator} />
 
-		<Font cssVariable="--font-serif" />
-		<Font cssVariable="--font-sans" />
+		<Font cssVariable="--font-serif" preload />
+		<Font cssVariable="--font-sans" preload />
 
-		<title>{title ?? "Mendel Greenberg"}</title>
+		<title>{item?.data.title ?? title ?? config.title}</title>
 
 		<script>
       if (localStorage.getItem("theme")) {

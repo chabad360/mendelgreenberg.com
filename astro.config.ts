@@ -24,6 +24,7 @@ export default defineConfig({
       // name: "IBM Plex Serif",
       name: "Noto Serif",
       cssVariable: "--font-serif",
+      formats: ["woff2", "ttf"],
     },
     {
       provider: fontProviders.google(),
@@ -31,6 +32,7 @@ export default defineConfig({
       name: "Instrument Sans",
       // name: "Roboto",
       cssVariable: "--font-sans",
+      formats: ["woff2", "ttf"],
     },
   ],
 

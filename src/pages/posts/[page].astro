@@ -10,22 +10,24 @@ export async function getStaticPaths({
 }: {
 	paginate: PaginateFunction;
 }) {
-	const posts = await getCollection("posts");
+	const posts = (await getCollection("posts"))
+  	.filter((post) => import.meta.env.PROD ? post.data.publish : true)
+  	.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 
-	return paginate(posts, { pageSize: 2 });
+	return paginate(posts, { pageSize: 7 });
 }
 
 const { page } = Astro.props;
 ---
 <Layout title={`Posts - Page ${page.currentPage}`}>
     <Contents>
-        <h1>Page {page.currentPage}</h1>
+        <h1>Posts</h1>
         <ul>
             {page.data.map((post) =>
             <li>
               <a href={post.id}>
                 <article class="button">
-                  <small><time datetime={post.data.date.toISOString()}>{post.data.date.toLocaleDateString()}</time> ⋅ {getReadingTime(post.body!).text}</small>
+                  <small><time datetime={post.data.date.toISOString()}>{post.data.date.toLocaleDateString()}</time> &middot; {getReadingTime(post.body!).text}</small>
                   <hgroup>
                     <h2>{post.data.title}</h2>
                     <p>{post.data.description}</p>
@@ -35,6 +37,19 @@ const { page } = Astro.props;
             </li>
             )}
         </ul>
+        <nav>
+          <div>
+            {page.url.first ? <a href={page.url.first}>First</a> : null}
+            {page.url.prev ? <a href={page.url.prev}>Previous</a> : null}
+          </div>
+          <div>
+            Page {page.currentPage} of {page.lastPage}
+          </div>
+          <div>
+            {page.url.next ? <a href={page.url.next}>Next</a> : null}
+            {page.url.last ? <a href={page.url.last}>Last</a> : null}
+          </div>
+        </nav>
     </Contents>
 </Layout>
 
@@ -71,4 +86,28 @@ const { page } = Astro.props;
     margin-top: 0.2rem;
     margin-bottom: 0.2rem;
   }
+
+  nav {
+    width: 100%;
+    margin-top: 2rem;
+
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+
+    font-family: var(--font-sans);
+  }
+
+  nav a {
+    border: 1px solid var(--color);
+    padding: 0.5rem 1rem;
+  }
+
+  nav :first-child {
+    justify-self: start;
+  }
+
+  nav :last-child{
+    justify-self: end;
+  }
+
 </style>
