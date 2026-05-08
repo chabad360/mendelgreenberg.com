@@ -1,8 +1,6 @@
 import type { Data, Node, Root, Image } from "mdast";
-import type { VFile } from "vfile";
 import { visit } from "unist-util-visit";
 import type { Properties } from "hast";
-import type { RehypePlugin } from "@astrojs/markdown-remark";
 
 interface wikiEmbedNode extends Node {
   type: "embed";
@@ -28,8 +26,8 @@ interface wikiImageNode extends wikiEmbedNode {
   };
 }
 
-export function remarkWikiImageToAstroImage(options: {}) {
-  return (tree: Root, file: VFile) => {
+export function remarkWikiImageToAstroImage() {
+  return (tree: Root) => {
     visit(tree, "embed", (node: wikiImageNode) => {
       if (node.data.hName !== "img") {
         return;

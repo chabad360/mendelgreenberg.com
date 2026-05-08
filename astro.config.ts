@@ -6,8 +6,13 @@ import icon from "astro-icon";
 import rehypeCallouts from "rehype-callouts";
 import wikiLinkPlugin from "@flowershow/remark-wiki-link";
 import { remarkWikiImageToAstroImage } from "./src/utils/images";
+import { config } from "./src/config";
+
+import sitemap from "@astrojs/sitemap";
 
 export default defineConfig({
+  site: config.site,
+
   redirects: {
     "/posts": "/posts/1",
     "/": "/posts",
@@ -38,6 +43,12 @@ export default defineConfig({
   },
 
   markdown: {
+    shikiConfig: {
+      themes: {
+        light: "gruvbox-light-hard",
+        dark: "gruvbox-dark-hard",
+      },
+    },
     remarkPlugins: [[wikiLinkPlugin, {}], remarkWikiImageToAstroImage],
     rehypePlugins: [
       [
@@ -52,5 +63,11 @@ export default defineConfig({
     ],
   },
 
-  integrations: [icon(), mdx()],
+  integrations: [
+    icon(),
+    mdx(),
+    sitemap({
+      filter: (page) => !page.includes("/drafts/"),
+    }),
+  ],
 });

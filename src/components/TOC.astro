@@ -3,13 +3,18 @@ import type { MarkdownHeading } from "astro";
 
 interface Props {
 	headings: MarkdownHeading[];
+	title?: string;
 }
 
-const { headings } = Astro.props;
+const { headings, title } = Astro.props;
+const titleSlug = title ? title.toLowerCase().replaceAll(/\s/g, "-") : "";
 ---
 <nav>
   <h2>Contents</h2>
   <ul>
+    {title ? <li>
+      <a href={`#${titleSlug}`}>{title}</a>
+    </li> : <></>}
     {headings.map((heading) => (
       <li>
         <a href={`#${heading.slug}`}>{heading.text}</a>
@@ -18,7 +23,7 @@ const { headings } = Astro.props;
   </ul>
 </nav>
 
-<script define:vars={{ headings }}>
+<script define:vars={{ headings, titleSlug }}>
 const observer = new IntersectionObserver(
   (entries) => {
     entries.forEach((entry) => {
@@ -34,6 +39,10 @@ const observer = new IntersectionObserver(
 );
 
 document.addEventListener("DOMContentLoaded", () => {
+  const element = document.getElementById(titleSlug);
+  if (element) {
+    observer.observe(element);
+  }
   headings.forEach((heading) => {
     const element = document.getElementById(heading.slug);
     observer.observe(element);
@@ -74,6 +83,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   li {
     list-style: none;
+    margin: 0.2rem 0;
   }
 
   a {
