@@ -1,0 +1,58 @@
+---
+import { Icon } from 'astro-icon/components'
+---
+<footer>
+  <div>
+    <span>
+      &copy; {new Date().getFullYear()} Mendel Greenberg. <span style="white-space: nowrap;">All rights reserved.</span>
+    </span>
+    <nav>
+      <a href="https://linkedin.com/in/mendel-greenberg" target="_blank" rel="noopener" title="LinkedIn"><Icon name="lucide:linkedin" /></a><a href="https://github.com/chabad360" target="_blank" rel="noopener" title="GitHub"><Icon name="lucide:github" /></a><a href="/rss.xml" title="RSS Feed"><Icon name="lucide:rss" /></a><a href="/sitemap-index.xml">Sitemap</a>
+    </nav>
+  </div>
+</footer>
+
+<style>
+  footer {
+    display: flex;
+    justify-content: center;
+    padding: 1.5rem 2rem;
+  }
+
+  div {
+    width: var(--content-width);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  div * {
+    vertical-align: middle;
+  }
+
+  span {
+    text-align: left;
+  }
+
+  nav {
+    text-align: right;
+  }
+
+  nav a:not(:last-child)::after {
+    content: "·";
+    margin: 0 0.4rem;
+  }
+
+  nav a {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  svg {
+    vertical-align: center;
+  }
+
+  a {
+    /*text-decoration: none;*/
+    font-family: var(--font-sans);
+  }
+</style>

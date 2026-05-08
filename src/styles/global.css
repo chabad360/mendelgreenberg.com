@@ -68,6 +68,15 @@ body {
   margin: 0;
   background: var(--background);
   color: var(--color);
+
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+}
+
+body footer {
+  margin-top: auto;
 }
 
 html[data-transition="true"] * {

@@ -1,5 +1,6 @@
 ---
 import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
 import "../styles/global.css";
 import { Font } from "astro:assets";
 
@@ -48,6 +49,7 @@ const { title } = Astro.props;
   		<div class="content-area">
   		    <slot />
   		</div>
+    <Footer />
 	</body>
 </html>
 
