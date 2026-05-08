@@ -5,7 +5,7 @@ import mdx from "@astrojs/mdx";
 import icon from "astro-icon";
 import rehypeCallouts from "rehype-callouts";
 import wikiLinkPlugin from "@flowershow/remark-wiki-link";
-import { wikiImageToAstroImage } from "./src/utils/images";
+import { remarkWikiImageToAstroImage } from "./src/utils/images";
 
 export default defineConfig({
   redirects: {
@@ -29,8 +29,16 @@ export default defineConfig({
     },
   ],
 
+  image: {
+    responsiveStyles: true,
+    layout: "full-width",
+    service: {
+      entrypoint: "astro/assets/services/sharp",
+    },
+  },
+
   markdown: {
-    remarkPlugins: [[wikiLinkPlugin, {}], wikiImageToAstroImage],
+    remarkPlugins: [[wikiLinkPlugin, {}], remarkWikiImageToAstroImage],
     rehypePlugins: [
       [
         rehypeCallouts,
