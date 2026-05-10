@@ -39,7 +39,10 @@ const { title, item } = Astro.props;
           basic: {
             type: "article",
             title: item.data.title,
-            image: item.data.image ? new URL(item.data.image, Astro.site).href : new URL(`/og/${item.collection}/${item.id}.png`, Astro.site).href,
+            image: item.data.image ? new URL(item.data.image.src, Astro.site).href : new URL(`/og/${item.collection}/${item.id}.png`, Astro.site).href,
+          },
+          image: {
+            alt: item.data.imageAlt ?? item.data.title,
           },
           article: {
             publishedTime: item.data.date.toISOString(),
