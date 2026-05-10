@@ -30,12 +30,23 @@
 
     .content :global(p:has(> img):not(:has(> :not(img)))) {
       display: flex;
+      /*flex-wrap: wrap;*/
     }
+
+    /*.content :global(p:has(> img):not(:has(> :not(img))))::after {
+      content: "Click to enhance";
+      font-style: italic;
+      text-align: center;
+    }*/
 
     .content :global(p:has(> img):not(:has(> :not(img))) img) {
       margin: 0.5rem;
       border-radius: 1rem;
       border: 1px solid var(--color);
+    }
+
+    .content :global(p:has(> img):not(:has(> :not(img))) img:only-of-type) {
+      max-width: 100%;
     }
 
     .content :global(p:has(> img):not(:has(> :not(img))) img:first-of-type) {

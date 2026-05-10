@@ -27,7 +27,6 @@ const titleSlug = title ? title.toLowerCase().replaceAll(/\s/g, "-") : "";
 const observer = new IntersectionObserver(
   (entries) => {
     entries.forEach((entry) => {
-      console.log(entry);
       const id = entry.target.getAttribute("id");
       if (entry.intersectionRatio > 0) {
         document.querySelector(`a.current`)?.classList.remove("current");

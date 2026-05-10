@@ -72,11 +72,13 @@ const { title, item } = Astro.props;
     </script>
 	</head>
 	<body>
-	    <Header />
-  		<div class="content-area">
-  		    <slot />
-  		</div>
+    <Header />
+		<div class="content-area">
+		    <slot />
+		</div>
     <Footer />
+
+    <script src="../scripts/lightbox.ts"></script>
 	</body>
 </html>
 
