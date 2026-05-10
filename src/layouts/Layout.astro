@@ -1,18 +1,16 @@
 ---
-import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
 import { config } from "../config";
 import "../styles/global.css";
 import { Font } from "astro:assets";
-import type { ItemSchema } from "../content.config";
+import type { CollectionEntry, DataEntryMap } from "astro:content";
 import { SEO } from "astro-seo";
-import type { CollectionEntry } from "astro:content";
-import type { DataEntryMap } from "astro:content";
-
+import type { ItemSchema } from "../content.config";
 
 export interface Props {
-  title?: string;
-  item?: CollectionEntry<keyof DataEntryMap> & { data: ItemSchema };
+	title?: string;
+	item?: CollectionEntry<keyof DataEntryMap> & { data: ItemSchema };
 }
 
 const { title, item } = Astro.props;

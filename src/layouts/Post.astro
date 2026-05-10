@@ -1,18 +1,18 @@
 ---
-import { type CollectionEntry, render } from 'astro:content';
-import Layout from "./Layout.astro";
+import { type CollectionEntry, render } from "astro:content";
+import getReadingTime from "reading-time";
 import Contents from "../components/Contents.astro";
 import TOC from "../components/TOC.astro";
-import getReadingTime from "reading-time";
+import Layout from "./Layout.astro";
 
 interface Props {
-	post: CollectionEntry<"posts">
+	post: CollectionEntry<"posts">;
 }
 
 const { post } = Astro.props;
 
 const { Content, headings } = await render(post);
-const titleSlug = post.data.title.toLowerCase().replaceAll(/\s/g, "-")
+const titleSlug = post.data.title.toLowerCase().replaceAll(/\s/g, "-");
 ---
 
 <Layout title={post.data.title} item={post} >

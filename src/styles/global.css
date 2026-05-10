@@ -1,53 +1,55 @@
 :root {
-  --content-width: 40rem;
+	--content-width: 40rem;
 }
 
 html[data-theme="dark"] {
-  --background: rgb(42 37 31);
-  --color: rgb(233 223 206);
-  /*--background: #2a251f;*/
-  /*--color: #e9dfce;*/
-  --theme: dark;
-  color-scheme: dark;
+	--background: rgb(42 37 31);
+	--color: rgb(233 223 206);
+	/*--background: #2a251f;*/
+	/*--color: #e9dfce;*/
+	--theme: dark;
+	color-scheme: dark;
 }
 
 html[data-theme="light"],
 html:not([data-theme]) {
-  --background: #fff2e6;
-  --color: #190d00;
-  --theme: light;
-  color-scheme: light;
+	--background: #fff2e6;
+	--color: #190d00;
+	--theme: light;
+	color-scheme: light;
 }
 
 .astro-code {
-  border: 1px solid var(--color);
-  padding: 0.5rem;
+	border: 1px solid var(--color);
+	padding: 0.5rem;
 }
 
 code {
-  counter-reset: step;
-  counter-increment: step calc(var(--start, 1) - 1);
+	counter-reset: step;
+	counter-increment: step calc(var(--start, 1) - 1);
 }
 
 code .line::before {
-  content: counter(step);
-  counter-increment: step;
-  width: 1rem;
-  margin-right: 1rem;
-  display: inline-block;
-  text-align: right;
-  color: rgba(115, 138, 148, 0.4);
+	content: counter(step);
+	counter-increment: step;
+	width: 1rem;
+	margin-right: 1rem;
+	display: inline-block;
+	text-align: right;
+	color: rgba(115, 138, 148, 0.4);
 }
 
+/* biome-ignore-start lint/complexity/noImportantStyles: these need to override shiki's defaults */
 html[data-theme="dark"] .astro-code,
 html[data-theme="dark"] .astro-code span {
-  color: var(--shiki-dark) !important;
-  background-color: var(--shiki-dark-bg) !important;
-  /* Optional, if you also want font styles */
-  font-style: var(--shiki-dark-font-style) !important;
-  font-weight: var(--shiki-dark-font-weight) !important;
-  text-decoration: var(--shiki-dark-text-decoration) !important;
+	color: var(--shiki-dark) !important;
+	background-color: var(--shiki-dark-bg) !important;
+	/* Optional, if you also want font styles */
+	font-style: var(--shiki-dark-font-style) !important;
+	font-weight: var(--shiki-dark-font-weight) !important;
+	text-decoration: var(--shiki-dark-text-decoration) !important;
 }
+/* biome-ignore-end lint/complexity/noImportantStyles: these need to override shiki's defaults */
 
 /*
 html[data-theme="light"] .astro-code,
@@ -63,90 +65,90 @@ html:not([data-theme]) .astro-code span {
 
 html,
 body {
-  scroll-behavior: smooth;
-  scroll-padding-top: 10vh;
-  margin: 0;
-  background: var(--background);
-  color: var(--color);
+	scroll-behavior: smooth;
+	scroll-padding-top: 10vh;
+	margin: 0;
+	background: var(--background);
+	color: var(--color);
 
-  min-height: 100vh;
+	min-height: 100vh;
 
-  display: flex;
-  flex-direction: column;
+	display: flex;
+	flex-direction: column;
 }
 
 body footer {
-  margin-top: auto;
+	margin-top: auto;
 }
 
 html[data-transition="true"] * {
-  transition:
-    background 0.15s,
-    color 0.15s;
+	transition:
+		background 0.15s,
+		color 0.15s;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html[data-transition="true"],
-  body {
-    transition: none;
-    scroll-behavior: auto;
-  }
+	html[data-transition="true"],
+	body {
+		transition: none;
+		scroll-behavior: auto;
+	}
 }
 
 @view-transition {
-  navigation: auto;
+	navigation: auto;
 }
 
 ::view-transition-old(root),
 ::view-transition-new(root) {
-  animation-duration: 0.175s;
+	animation-duration: 0.175s;
 }
 
 a {
-  color: var(--color);
+	color: var(--color);
 }
 
 a:hover {
-  text-decoration: none;
+	text-decoration: none;
 }
 
 /* --- Callouts --- */
 .callout,
 blockquote {
-  border: 1px solid var(--color);
-  border-left: 4px solid var(--color);
-  padding: 1rem;
-  padding-bottom: 0rem;
+	border: 1px solid var(--color);
+	border-left: 4px solid var(--color);
+	padding: 1rem;
+	padding-bottom: 0rem;
 }
 
 blockquote {
-  padding: 0 1rem;
-  margin: 0;
+	padding: 0 1rem;
+	margin: 0;
 }
 
 .callout[data-collapsible="true"]:not(:open) {
-  padding: 1rem;
+	padding: 1rem;
 }
 
 .callout .callout-title {
-  display: flex;
-  flex-direction: row-reverse;
-  justify-content: start;
-  cursor: pointer;
-  font-family: var(--font-sans);
-  font-weight: bold;
+	display: flex;
+	flex-direction: row-reverse;
+	justify-content: start;
+	cursor: pointer;
+	font-family: var(--font-sans);
+	font-weight: bold;
 }
 
 .callout .callout-fold-icon {
-  margin: 0 0.25rem;
-  transform: rotate(0deg);
-  transition: transform 0.15s;
+	margin: 0 0.25rem;
+	transform: rotate(0deg);
+	transition: transform 0.15s;
 }
 
 .callout[data-collapsible="true"]:not(:open) .callout-fold-icon {
-  transform: rotate(-90deg);
+	transform: rotate(-90deg);
 }
 
 .callout .callout-fold-icon svg {
-  vertical-align: middle;
+	vertical-align: middle;
 }

@@ -1,9 +1,9 @@
 ---
 import { getCollection } from "astro:content";
 import type { PaginateFunction } from "astro";
-import Layout from "../../layouts/Layout.astro";
-import Contents from "../../components/Contents.astro";
 import getReadingTime from "reading-time";
+import Contents from "../../components/Contents.astro";
+import Layout from "../../layouts/Layout.astro";
 
 export async function getStaticPaths({
 	paginate,
@@ -11,8 +11,8 @@ export async function getStaticPaths({
 	paginate: PaginateFunction;
 }) {
 	const posts = (await getCollection("posts"))
-  	.filter((post) => import.meta.env.PROD ? post.data.publish : true)
-  	.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+		.filter((post) => (import.meta.env.PROD ? post.data.publish : true))
+		.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 
 	return paginate(posts, { pageSize: 7 });
 }
