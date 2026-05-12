@@ -50,7 +50,7 @@ export const GET: APIRoute = async ({ props: { item }, url }) => {
   const sansFamily = "'Instrument Sans', sans-serif";
   const serifFamily = "'Noto Serif', serif";
 
-  return await satoriAstroOG({
+  let img = satoriAstroOG({
     template: html` <div
       style="display: flex; flex-direction: column; background-color: ${background}; color: ${color}; height: 630px; width: 1200px; justify-content: center; text-align: left; padding: 0 5rem;"
     >
@@ -82,7 +82,49 @@ export const GET: APIRoute = async ({ props: { item }, url }) => {
     </div>`,
     width: 1200,
     height: 630,
-  }).toResponse({
+  });
+
+  // if (item.data.image?.src)
+  //   img = satoriAstroOG({
+  //     template: html` <div
+  //       style="display: flex; flex-direction: column; background-color: ${background}; color: ${color}; height: 630px; width: 1200px; justify-content: center; text-align: left; padding: 0 5rem;"
+  //     >
+  //       <div
+  //         style="display: flex; flex-direction: column; justify-content: center; align-items: stretch; border-left: 2px solid ${color}; padding: 1.5rem 0; padding-left: 2.5rem;"
+  //       >
+  //         <small
+  //           style="font-family: ${serifFamily}; margin: 0; font-size: 1.5rem; color: ${color};"
+  //         >
+  //           ${item.data.date.toLocaleDateString()} ⋅
+  //           ${getReadingTime(item.body).text}
+  //         </small>
+  //         <h1
+  //           style="font-family: ${sansFamily}; margin-bottom: 0; font-size: 4.5rem;"
+  //         >
+  //           ${item.data.title}
+  //         </h1>
+  //         <h2
+  //           style="font-family: ${serifFamily}; margin-top: 0.25rem; font-size: 3rem;"
+  //         >
+  //           ${item.data.description}
+  //         </h2>
+  //         <p
+  //           style="font-family: ${serifFamily}; margin: 0; margin-top: 2rem; font-size: 2rem;"
+  //         >
+  //           ${config.title}
+  //         </p>
+  //       </div>
+  //       <img
+  //         src="file://${item.data.image.src}"
+  //         alt="image"
+  //         style="position: absolute; bottom: 1.5rem; right: 1.5rem; width: 3rem; height: 3rem;"
+  //       />
+  //     </div>`,
+  //     width: 1200,
+  //     height: 630,
+  //   });
+
+  return await img.toResponse({
     satori: {
       embedFont: true,
       fonts: [
