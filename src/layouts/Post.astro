@@ -1,10 +1,11 @@
 ---
+import { Image } from "astro:assets";
 import { type CollectionEntry, render } from "astro:content";
 import getReadingTime from "reading-time";
 import Contents from "../components/Contents.astro";
+import ItemData from "../components/ItemData.astro";
 import TOC from "../components/TOC.astro";
 import Layout from "./Layout.astro";
-import { Image } from "astro:assets";
 
 interface Props {
 	post: CollectionEntry<"posts">;
@@ -24,7 +25,7 @@ const titleSlug = post.data.title.toLowerCase().replaceAll(/\s/g, "-");
         { post.data.image &&
           <Image class="cover" src={post.data.image} alt={post.data.imageAlt ?? post.data.title} loading="lazy" />
         }
-        <small><time datetime={post.data.date.toISOString()}>{post.data.date.toLocaleDateString()}</time> &middot; {getReadingTime(post.body!).text}</small>
+        <ItemData item={post} />
         <h1 class="title" id={titleSlug}>{post.data.title}</h1>
         <h3 class="description">{post.data.description}</h3>
         <Content />
@@ -69,7 +70,7 @@ const titleSlug = post.data.title.toLowerCase().replaceAll(/\s/g, "-");
     margin-top: 0;
   }
 
-  small {
+  article :global(small) {
     display: block;
     margin-top: 0.5rem;
     margin-bottom: -0.8rem;

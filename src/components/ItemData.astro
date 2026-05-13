@@ -1,0 +1,29 @@
+---
+import type { CollectionEntry, DataEntryMap } from "astro:content";
+import getReadingTime from "reading-time";
+import type { ItemSchema } from "../content.config";
+
+interface Props {
+	item: CollectionEntry<keyof DataEntryMap> & { data: ItemSchema };
+}
+
+const { item } = Astro.props;
+---
+<small>
+  <time datetime={item.data.date.toISOString()}>{item.data.date.toLocaleDateString()}</time>
+  &middot; {getReadingTime(item.body!).text}
+  { item.data.tags && <> &middot; {item.data.tags.map((t) => <span class="tag">{t.toLocaleUpperCase()}</span>)}</> }
+</small>
+
+<style>
+  .tag {
+    margin: 0rem 0.25rem;
+    margin-left: 0.15rem;
+    color: rgb(from var(--color) r g b / 0.75);
+    border: 1px solid rgb(from var(--color) r g b / 0.25);
+    padding: 0.05rem 0.35rem;
+    border-radius: 1rem;
+    font-size: 8pt;
+    font-family: var(--font-sans);
+  }
+</style>
