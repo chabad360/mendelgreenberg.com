@@ -13,14 +13,14 @@
 		"sign-draft": "scripts/sign-draft.ts"
 	},
 	"dependencies": {
-		"@astrojs/markdown-remark": "^7.1.1",
-		"@astrojs/mdx": "^5.0.3",
+		"@astrojs/markdown-remark": "7.1.2",
+		"@astrojs/mdx": "5.0.6",
 		"@astrojs/rss": "^4.0.18",
 		"@astrojs/sitemap": "^3.7.2",
 		"@biomejs/biome": "^2.4.15",
 		"@flowershow/remark-wiki-link": "^3.4.0",
 		"@iconify-json/lucide": "^1.2.105",
-		"astro": "^6.3.1",
+		"astro": "6.3.7",
 		"astro-icon": "^1.1.5",
 		"astro-seo": "^1.1.0",
 		"hast": "^1.0.0",
