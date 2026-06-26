@@ -12,4 +12,4 @@ main = "worker.js"
   not_found_handling = "404-page"  # Serve custom 404 page from src/pages/404.astro
   run_worker_first = ["/drafts/*"]
   binding = "ASSETS"
-  # html_handling = "drop-trailing-slash"
+  html_handling = "drop-trailing-slash"

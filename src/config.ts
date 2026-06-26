@@ -8,8 +8,7 @@ export interface config {
 }
 
 export const config: config = {
-	// site: "https://mendelgreenberg.com",
-	site: "https://mendels-macbook-air.hydra-minor.ts.net/",
+	site: "https://mendelgreenberg.com",
 	title: "Mendel Greenberg",
 	description: "Thoughts, Speech, Actions.",
 	author: {

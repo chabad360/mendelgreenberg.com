@@ -10,10 +10,10 @@ interface Props {
 const { item } = Astro.props;
 ---
 <small>
-	{ item.data.publish ? "" : <><b style={"color: red"}>DRAFT</b> &middot;</> }
-  <time datetime={item.data.date.toISOString()}>{item.data.date.toLocaleDateString()}</time>
-  &middot; {getReadingTime(item.body ?? "").text}
-  { item.data.tags && item.data.tags.length > 0 && <> &middot; {item.data.tags.map((t) => <span class="tag">{t.toLocaleUpperCase()}</span>)}</> }
+	{ item.data.publish ? "" : <><b style={"color: red"}>DRAFT</b> &middot;&nbsp;</> }
+  <time datetime={item.data.date.toISOString()}>{item.data.date.toLocaleDateString()}</time>&nbsp;&middot;&nbsp;
+  {getReadingTime(item.body ?? "").text}
+  { item.data.tags && item.data.tags.length > 0 && <> &nbsp;&middot; {item.data.tags.map((t) => <span class="tag">{t.toLocaleUpperCase()}</span>)}</> }
 </small>
 
 <style>

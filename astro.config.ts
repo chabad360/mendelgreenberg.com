@@ -1,15 +1,19 @@
 // @ts-check
 
+// import { remarkWikiImageToAstroImage } from "./src/utils/images";
+// import { remarkModifiedTime } from "./src/utils/modifiedTime";
+import { satteri } from "@astrojs/markdown-satteri";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
-import wikiLinkPlugin from "@flowershow/remark-wiki-link";
+// import wikiLinkPlugin from "@flowershow/remark-wiki-link";
 import { defineConfig, fontProviders } from "astro/config";
 import icon from "astro-icon";
-import rehypeCallouts from "rehype-callouts";
+// import rehypeCallouts from "rehype-callouts";
 import { config } from "./src/config";
-import { remarkExternalLinks } from "./src/utils/externalLinks";
-import { remarkWikiImageToAstroImage } from "./src/utils/images";
-import { remarkModifiedTime } from "./src/utils/modifiedTime";
+// import { unified } from '@astrojs/markdown-remark';
+import { pluginCallouts } from "./src/utils/callouts";
+// import { remarkExternalLinks, pluginExternalLinks } from "./src/utils/externalLinks";
+import { pluginExternalLinks } from "./src/utils/externalLinks";
 
 export default defineConfig({
 	site: config.site,
@@ -52,23 +56,34 @@ export default defineConfig({
 				dark: "gruvbox-dark-hard",
 			},
 		},
-		remarkPlugins: [
-			[wikiLinkPlugin, {}],
-			remarkWikiImageToAstroImage,
-			remarkModifiedTime,
-			remarkExternalLinks,
-		],
-		rehypePlugins: [
-			[
-				rehypeCallouts,
-				{
-					showIndicator: false,
-					tags: {
-						contentTagName: "aside",
-					},
-				},
-			],
-		],
+		processor: satteri({
+			features: {
+				gfm: true,
+				frontmatter: true,
+				wikilinks: true,
+				smartPunctuation: true,
+			},
+			mdastPlugins: [pluginCallouts, pluginExternalLinks],
+		}),
+		// processor: unified({
+		// 	remarkPlugins: [
+		// 		[wikiLinkPlugin, {}],
+		// 		remarkWikiImageToAstroImage,
+		// 		remarkModifiedTime,
+		// 		remarkExternalLinks,
+		// 	],
+		// 	rehypePlugins: [
+		// 		[
+		// 			rehypeCallouts,
+		// 			{
+		// 				showIndicator: false,
+		// 				tags: {
+		// 					contentTagName: "aside",
+		// 				},
+		// 			},
+		// 		],
+		// 	],
+		// }),
 	},
 
 	integrations: [

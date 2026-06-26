@@ -130,23 +130,27 @@ blockquote {
 	padding: 1rem;
 }
 
-.callout .callout-title {
+.callout summary {
 	display: flex;
 	flex-direction: row-reverse;
 	justify-content: start;
-	cursor: pointer;
 	font-family: var(--font-sans);
 	font-weight: bold;
+	text-transform: capitalize;
+}
+
+details.callout summary {
+	cursor: pointer;
 }
 
 .callout .callout-fold-icon {
 	margin: 0 0.25rem;
-	transform: rotate(0deg);
+	transform: rotate(90deg);
 	transition: transform 0.15s;
 }
 
 .callout[data-collapsible="true"]:not(:open) .callout-fold-icon {
-	transform: rotate(-90deg);
+	transform: rotate(0deg);
 }
 
 .callout .callout-fold-icon svg {

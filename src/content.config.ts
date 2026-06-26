@@ -19,7 +19,7 @@ const itemSchema = ({ image }: { image: ImageFunction }) =>
 		aliases: z.string().array().optional(),
 	});
 
-export type ItemSchema = z.infer<typeof itemSchema>;
+export type ItemSchema = z.infer<ReturnType<typeof itemSchema>>;
 
 const posts = defineCollection({
 	loader: glob({ base: "./src/content/posts", pattern: "**/*.{md,mdx}" }),
